@@ -1,20 +1,15 @@
 package ua.com.ecconnect.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 public class FirstProcessingPage {
 
     private WebDriver driver;
     private MainPage mainPage;
-    private String emailTest = "someone@gmail.com";
 
     public FirstProcessingPage(WebDriver driver, MainPage mainPage) {
         PageFactory.initElements(driver, this);
@@ -35,7 +30,7 @@ public class FirstProcessingPage {
     private WebElement year;
 
     @FindBy(xpath = "//input[@name='Email']")
-    private WebElement email;
+    private WebElement emailLocator;
 
     @FindBy(xpath = "//input[@id='cardDataSubmit']")
     private WebElement submitButton;
@@ -43,7 +38,7 @@ public class FirstProcessingPage {
     @FindBy(xpath = "//tr[@class='labeldata']/td[1]/a")
     private WebElement retreat;
 
-    public void clickRetreat(){
+    public void clickReturn(){
         retreat.click();
     }
 
@@ -52,33 +47,33 @@ public class FirstProcessingPage {
     }
 
 
-    public void inputCardNumber() {
+    public void inputCardNumber(String[] cardInfo) {
         cardNumber.click();
         cardNumber.clear();
-        cardNumber.sendKeys(mainPage.getInfoFromString(mainPage.firstCardInfo())[0]);
+        cardNumber.sendKeys(cardInfo[0]);
     }
 
-    public void inputMonth() {
+    public void inputMonth(String[] cardInfo) {
         Select select = new Select(month);
-        select.selectByVisibleText(mainPage.getInfoFromString(mainPage.firstCardInfo())[1]);
+        select.selectByVisibleText(cardInfo[1]);
     }
 
-    public void inputYear() {
+    public void inputYear(String[] cardInfo) {
         Select select = new Select(year);
-        select.selectByVisibleText(mainPage.getInfoFromString(mainPage.firstCardInfo())[2]);
+        select.selectByVisibleText(cardInfo[2]);
     }
 
-    public void inputEmail() {
-        email.click();
-        email.clear();
-        email.sendKeys(emailTest);
+    public void inputEmail(String email) {
+        emailLocator.click();
+        emailLocator.clear();
+        emailLocator.sendKeys(email);
     }
 
-    public void inputAllFields() {
-        inputCardNumber();
-        inputMonth();
-        inputYear();
-        inputEmail();
+    public void inputAllFields(String[] cardInfo, String email) {
+        inputCardNumber(cardInfo);
+        inputMonth(cardInfo);
+        inputYear(cardInfo);
+        inputEmail(email);
     }
 
     public SecondProcessingPage clickSubmittButton() {

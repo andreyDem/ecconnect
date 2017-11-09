@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class MainPage {
     private String firstCardInfoText;
+    private String secondCardInfoText;
     private WebDriver driver;
 
     public MainPage(WebDriver driver) {
@@ -39,10 +40,11 @@ public class MainPage {
     public void clickDemoTestButton() {
         demoTestButton.click();
         firstCardInfoText = firstCardInfo.getText();
+        secondCardInfoText = secondCardInfo.getText();
     }
 
     // 0 - card number; 1,2 - validity; 3 - cvv2.
-    public String[] getInfoFromString(String card) {
+    private String[] getInfoFromString(String card) {
         String[] arr = new String[4];
         arr[0] = card.substring(0, 16);
         for (int i = 0; i < card.length(); i++) {
@@ -57,24 +59,24 @@ public class MainPage {
         return arr;
     }
 
-    public String firstCardInfo() {
-        return firstCardInfoText;
+    public String[] firstCardInfo() {
+        return getInfoFromString(firstCardInfoText);
     }
 
-    public String secondCardInfo() {
-        return secondCardInfo.getText();
+    public String[] secondCardInfo() {
+        return getInfoFromString(secondCardInfoText);
     }
 
     public FirstProcessingPage clickLeftButton() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        String previousURL = driver.getCurrentUrl();
+        final String previousURL = driver.getCurrentUrl();
         leftSubmitButton.click();
+        Actions action = new Actions(driver);
+        action.sendKeys(Keys.chord(Keys.CONTROL, Keys.TAB)).perform();
+        ArrayList<String> openTabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(openTabs.get(1));
         ExpectedCondition e = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                Actions action = new Actions(driver);
-                action.sendKeys(Keys.chord(Keys.CONTROL, Keys.TAB)).perform();
-                ArrayList<String> openTabs = new ArrayList<String>(driver.getWindowHandles());
-                driver.switchTo().window(openTabs.get(1));
                 return !d.getCurrentUrl().equals(previousURL);
             }
         };
@@ -83,7 +85,20 @@ public class MainPage {
     }
 
     public FirstProcessingPage clickRigthButton() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        final String previousURL = driver.getCurrentUrl();
         rightSubmitButton.click();
+        Actions action = new Actions(driver);
+        action.sendKeys(Keys.chord(Keys.CONTROL, Keys.TAB)).perform();
+        ArrayList<String> openTabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(openTabs.get(1));
+        ExpectedCondition e = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+
+                return !d.getCurrentUrl().equals(previousURL);
+            }
+        };
+        wait.until(e);
         return new FirstProcessingPage(driver, this);
     }
 
