@@ -37,6 +37,10 @@ public class MainPage {
     @FindBy(xpath = "//td[@class='buy-item']//input[@class='submit']")
     private WebElement rightSubmitButton;
 
+    public String getCurrentURL() {
+        return driver.getCurrentUrl();
+    }
+
     public void clickDemoTestButton() {
         demoTestButton.click();
         firstCardInfoText = firstCardInfo.getText();

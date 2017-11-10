@@ -1,8 +1,12 @@
 package ua.com.ecconnect.tests;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.InvalidElementStateException;
 import ua.com.ecconnect.drivers.FirefoxSettings;
 import ua.com.ecconnect.pages.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class DemoTest extends FirefoxSettings {
 
@@ -20,7 +24,7 @@ public class DemoTest extends FirefoxSettings {
     }
 
     @Test
-    public void incorectCard(){
+    public void incorrectCard(){
         MainPage mainPage = new MainPage(driver);
         mainPage.clickDemoTestButton();
         FirstProcessingPage first = mainPage.clickLeftButton();
@@ -37,8 +41,40 @@ public class DemoTest extends FirefoxSettings {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickDemoTestButton();
         FirstProcessingPage first = mainPage.clickLeftButton();
+        String previousURL = mainPage.getCurrentURL();
         first.clickReturn();
+        Assert.assertNotEquals(previousURL, mainPage.getCurrentURL());
     }
 
-    
+    @Test(expected = InvalidElementStateException.class)
+    public void textCannotBeInput() {
+        MainPage mainPage = new MainPage(driver);
+        mainPage.clickDemoTestButton();
+        FirstProcessingPage first = mainPage.clickLeftButton();
+    }
+
+    @Test
+    public void checkVisaInfo(){
+        MainPage mainPage = new MainPage(driver);
+        mainPage.clickDemoTestButton();
+        FirstProcessingPage first = mainPage.clickLeftButton();
+        first.clickVisaInfo();
+        first.assertVisaText();
+    }
+
+    @Test
+    public void inputIncorrectSymbols(){
+        MainPage mainPage = new MainPage(driver);
+        mainPage.clickDemoTestButton();
+        FirstProcessingPage first = mainPage.clickLeftButton();
+        first.chooseTypeCard();
+        String[] symbols = {"wawdaw","13", "1960", "0001"};
+        first.inputCardNumber(symbols);
+        first.inputEmail("some.gmail.com");
+        SecondProcessingPage second = first.clickSubmittButton();
+        first.assertErrorCardMsg();
+        first.assertErrorEmailMsg();
+    }
+
+
 }

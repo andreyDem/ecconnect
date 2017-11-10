@@ -1,10 +1,11 @@
 package ua.com.ecconnect.pages;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
+        import org.junit.Assert;
+        import org.openqa.selenium.WebDriver;
+        import org.openqa.selenium.WebElement;
+        import org.openqa.selenium.support.FindBy;
+        import org.openqa.selenium.support.PageFactory;
+        import org.openqa.selenium.support.ui.Select;
 
 public class FirstProcessingPage {
 
@@ -37,6 +38,18 @@ public class FirstProcessingPage {
 
     @FindBy(xpath = "//tr[@class='labeldata']/td[1]/a")
     private WebElement retreat;
+
+    @FindBy(xpath = "//img[@src='/go/images/vbv.gif']")
+    private WebElement visaInfo;
+
+    @FindBy(xpath = "//b[@class='smalltext']")
+    private WebElement helpInfo;
+
+    @FindBy(xpath = "//tr[@class='labeldata'][8]/td[2]/span[@class='V_message']")
+    private WebElement errorCardMessage;
+
+    @FindBy(xpath = "//tr[@class='labeldata'][10]/td[2]/span[@class='V_message']")
+    private WebElement errorEmailMessage;
 
     public void clickReturn(){
         retreat.click();
@@ -80,4 +93,26 @@ public class FirstProcessingPage {
         submitButton.click();
         return new SecondProcessingPage(driver, mainPage);
     }
+
+    public void clickVisaInfo(){
+        String winHandleBefore = driver.getWindowHandle();
+        visaInfo.click();
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+    }
+
+    public void assertVisaText(){
+        Assert.assertEquals("ДОПОМОГА", helpInfo.getText());
+    }
+
+    public void assertErrorCardMsg(){
+        Assert.assertEquals("Некоректні символи у номері карти", errorCardMessage.getText());
+    }
+
+    public void assertErrorEmailMsg(){
+        Assert.assertEquals("Некоректний E-mail", errorEmailMessage.getText());
+    }
+
+
 }
