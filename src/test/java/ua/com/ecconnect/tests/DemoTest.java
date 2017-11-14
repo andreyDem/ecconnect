@@ -46,11 +46,12 @@ public class DemoTest extends FirefoxSettings {
         Assert.assertNotEquals(previousURL, mainPage.getCurrentURL());
     }
 
-    @Test(expected = InvalidElementStateException.class)
-    public void textCannotBeInput() {
+    @Test
+    public void checkValueGoods() {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickDemoTestButton();
-        FirstProcessingPage first = mainPage.clickLeftButton();
+        FirstProcessingPage first = mainPage.clickRigthButton();
+        first.assertValueRight();
     }
 
     @Test

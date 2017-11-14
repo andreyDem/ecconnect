@@ -51,6 +51,9 @@ public class FirstProcessingPage {
     @FindBy(xpath = "//tr[@class='labeldata'][10]/td[2]/span[@class='V_message']")
     private WebElement errorEmailMessage;
 
+    @FindBy(xpath = "//tr[@class='labeldata'][5]/td[2]")
+    private WebElement checkValueRight;
+
     public void clickReturn(){
         retreat.click();
     }
@@ -112,6 +115,10 @@ public class FirstProcessingPage {
 
     public void assertErrorEmailMsg(){
         Assert.assertEquals("Некоректний E-mail", errorEmailMessage.getText());
+    }
+
+    public void assertValueRight(){
+        Assert.assertEquals("120.00 UAH", checkValueRight.getText());
     }
 
 
