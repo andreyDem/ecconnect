@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ChromeSettings {
     protected WebDriver driver;
-    
+
     @Before
     public void setUp() {
 //        Optional, if not specified, WebDriver will search your path for chromedriver.
@@ -22,6 +22,7 @@ public class ChromeSettings {
 
     @After
     public void tearDown() {
-        driver.close();
+        if (driver != null)
+            driver.quit();
     }
 }
