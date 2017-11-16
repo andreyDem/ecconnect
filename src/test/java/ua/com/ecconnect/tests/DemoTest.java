@@ -2,13 +2,12 @@ package ua.com.ecconnect.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.InvalidElementStateException;
-import ua.com.ecconnect.drivers.FirefoxSettings;
+import ua.com.ecconnect.drivers.ChromeSettings;
 import ua.com.ecconnect.pages.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class DemoTest extends FirefoxSettings {
+public class DemoTest extends ChromeSettings {
 
     @Test
     public void correctCard() {
@@ -19,7 +18,7 @@ public class DemoTest extends FirefoxSettings {
         first.inputAllFields(mainPage.firstCardInfo(), "someemail@gmail.com");
         SecondProcessingPage second = first.clickSubmittButton();
         second.inputCvc(mainPage.firstCardInfo());
-        SuccessPage successPage = second.clickSubmitButtonCorrect();
+        SuccessPage successPage = second.SubmitButtonChrome();
         successPage.assertMsg();
     }
 

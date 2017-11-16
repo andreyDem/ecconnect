@@ -37,12 +37,18 @@ public class SecondProcessingPage {
         fieldCvc.sendKeys(cardInfo[3]);
     }
 
-    public SuccessPage clickSubmitButtonCorrect(){
+    //if use Firefox settings with alert popUp
+    public SuccessPage SubmitButtonFirefox(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         submitButton.click();
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        return new SuccessPage(driver);
+    }
+    //if use Chrome settings without alert  popup
+    public SuccessPage SubmitButtonChrome(){
+        submitButton.click();
         return new SuccessPage(driver);
     }
 
