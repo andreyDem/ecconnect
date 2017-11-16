@@ -13,7 +13,7 @@ public class ChromeSettings {
     @Before
     public void setUp() {
 //        Optional, if not specified, WebDriver will search your path for chromedriver.
-        System.setProperty("webdriver.chrome.driver", "D:\\JAVA\\Browser drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\drivers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://ecconnect.com.ua");
 //        driver.manage().window().maximize();

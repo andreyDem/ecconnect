@@ -14,7 +14,7 @@ public class FirefoxSettings {
     @Before
     public void setUp() {
 //      Optional, if not specified, WebDriver will search your path for chromedriver.
-        System.setProperty("webdriver.gecko.driver", "D:\\JAVA\\Browser drivers\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "src\\main\\resources\\drivers\\geckodriver.exe");
         driver = new FirefoxDriver();
         driver.get("https://ecconnect.com.ua");
 //        driver.manage().window().maximize();
